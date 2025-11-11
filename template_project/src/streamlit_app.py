@@ -2,7 +2,7 @@
 import pandas as pd
 
 # matplotlib
-#import matplotlib as mpl
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 #plotly
@@ -13,7 +13,7 @@ import streamlit as st
 
 st.title("MPG")
 
-df = pd.read_csv("data/mpg.csv")
+df = pd.read_csv("data\mpg.csv")
 
 # Basic set-up of the page:
 # First the checkbox to show the data frame
@@ -49,7 +49,7 @@ def mpg_mpl(year, car_class, show_means):
         group = group[group['class'] == car_class]
     group.plot('displ', 'hwy', marker='.', linestyle='', ms=12, alpha=0.5, ax=ax, legend=None)
     if show_means == "Yes":
-        means = df.groupby('class').mean()
+        means = df.groupby('class')[['displ', 'hwy']].mean().reset_index()
         for cc in means.index:
             ax.plot(means.loc[cc, 'displ'], means.loc[cc, 'hwy'], marker='.', linestyle='', ms=12, alpha=1, label=cc)
         ax.legend(loc='upper right', bbox_to_anchor=(1.1, 1))
